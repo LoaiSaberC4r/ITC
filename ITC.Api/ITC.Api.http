@@ -1,0 +1,6 @@
+@ITC.Api_HostAddress = http://localhost:5239
+
+GET {{ITC.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
