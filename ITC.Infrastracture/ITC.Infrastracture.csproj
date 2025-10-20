@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BuildingBlock.Infrastracture\BuildingBlock.Infrastracture.csproj" />
+    <ProjectReference Include="..\ITC.Application\ITC.Application.csproj" />
+  </ItemGroup>
+
 </Project>

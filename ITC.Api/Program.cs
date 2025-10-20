@@ -1,6 +1,8 @@
 ﻿using BuildingBlock.Api;
+using BuildingBlock.Api.Bootstrap;
 using BuildingBlock.Api.Logging;
 using BuildingBlock.Domain.Results;
+using ITC.Domain.Resources;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.AddSerilogBootstrap("ITC.Api");
+builder.Services.AddSharedLocalization(opts =>
+{
+    opts.SupportedCultures = new[] { "ar", "en" };
+    opts.DefaultCulture = "ar";               // لو حاب تخليها "en" غيّرها
+    opts.AllowQueryStringLang = true;         // يدعم ?culture=ar أو ?lang=ar
+});
 
 var app = builder.Build();
 
@@ -22,6 +30,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseSerilogPipeline();
+app.UseSharedLocalization();
+
 app.MapLoggingDiagnostics();
 
 app.UseHttpsRedirection();
@@ -49,8 +59,8 @@ app.MapGet("/demo/result-fail", (HttpContext http) =>
 {
     var errors = new[]
     {
-        Error.Validation(code: "InvalidName", message: "Name is required."),
-        Error.Validation(code: "InvalidAge",  message: "Age must be >= 18.")
+        Error.Validation(code: Message.NotFount, message: "Name is required."),
+        Error.Validation(code: Message.NotFount,  message: "Age must be >= 18.")
     };
     return Result.Fail(errors).ToIResult(http);
 });
