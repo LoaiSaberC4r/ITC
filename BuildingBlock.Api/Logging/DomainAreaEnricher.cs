@@ -1,4 +1,7 @@
-﻿namespace BuildingBlock.Api.Logging
+﻿using Serilog.Core;
+using Serilog.Events;
+
+namespace BuildingBlock.Api.Logging
 {
     public sealed class DomainAreaEnricher : ILogEventEnricher
     {
