@@ -23,3 +23,4 @@ namespace BuildingBlock.Application.Behaviors
                 await Timeout.ExecuteAsync(async ct2 => await next(), ct));
         }
     }
+}
