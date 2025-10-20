@@ -7,18 +7,20 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// ---------Serilog-------- /
 builder.AddSerilogBootstrap("ITC.Api");
+//---------Localization-------- /
 builder.Services.AddSharedLocalization(opts =>
 {
     opts.SupportedCultures = new[] { "ar", "en" };
-    opts.DefaultCulture = "ar";               // لو حاب تخليها "en" غيّرها
-    opts.AllowQueryStringLang = true;         // يدعم ?culture=ar أو ?lang=ar
+    opts.DefaultCulture = "en";
+    opts.AllowQueryStringLang = true;
 });
 
 var app = builder.Build();
@@ -29,15 +31,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+// Custom Middleware
 app.UseSerilogPipeline();
 app.UseSharedLocalization();
-
 app.MapLoggingDiagnostics();
-
+///////////////////////
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
 app.MapGet("/log/test", (HttpContext http) =>
