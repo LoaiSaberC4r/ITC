@@ -24,7 +24,8 @@ namespace BuildingBlock.Domain.Exceptions
 #endif
             HttpRequestException hex
                 => Error.Infra(ErrorCodes.Common.InfraTimeout, hex.Message, source: "HTTP"),
-            _ => Error.Unknown("Unknown.Exception", "Unhandled server error.", source: ex.GetType().FullName)
+            _ => Error.Unknown("Unknown.Exception", ex.ToString(), source: ex.GetType().FullName)
+            //Should be ex.Tostring() unhandled service exception
         };
 
 #if NET8_0_OR_GREATER

@@ -47,7 +47,7 @@ namespace BuildingBlock.Api.Middleware
                     status = (int)HttpStatusCode.InternalServerError,
                     traceId,
                     correlationId = corr,
-                    detail = _env.IsDevelopment() ? ex.ToString() : null
+                    detail = _env.IsDevelopment() ? ex.ToString() : null   //should here null
                 };
 
                 context.Response.ContentType = "application/problem+json";

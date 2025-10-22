@@ -3,7 +3,6 @@ using BuildingBlock.Application.Time;
 using BuildingBlock.Infrastracture.Interceptors;
 using BuildingBlock.Infrastracture.Repositories;
 using BuildingBlock.Infrastracture.Time;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -12,15 +11,10 @@ namespace BuildingBlock.Infrastracture.Bootstrap
     public static class DependencyInjection
     {
         // TContext: DbContext الخاص بالخدمة (TrafficLightDb, HealthCareDb, ...)
-        public static IServiceCollection AddEfInfrastructure<TContext>(this IServiceCollection services)
-            where TContext : DbContext
+        public static IServiceCollection AddEfInfrastructure(this IServiceCollection services)
         {
-            // IGenericRepository<TEntity>  -> EfGenericRepository<TEntity, TContext>
-            services.AddScoped(typeof(IGenericRepository<>), typeof(EfGenericRepository<,>));
-
-            // IUnitOfWork -> EfUnitOfWork<TContext>
-            services.AddScoped<IUnitOfWork, EfUnitOfWork<TContext>>();
-
+            services.AddScoped(typeof(IGenericRepository<>), typeof(EfGenericRepository<>));
+            services.AddScoped<IUnitOfWork, EfUnitOfWork>();
             return services;
         }
 

@@ -4,7 +4,7 @@ using System.Data;
 
 namespace BuildingBlock.Application.Repositories
 {
-    public interface IUnitOfWork : IAsyncDisposable
+    public interface IUnitOfWork
     {
         // Repositories
         IGenericRepository<TEntity> Repository<TEntity>() where TEntity : class;

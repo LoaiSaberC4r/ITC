@@ -6,17 +6,16 @@ using System.Linq.Expressions;
 
 namespace BuildingBlock.Infrastracture.Repositories
 {
-    internal class EfGenericRepository<TEntity, TContext> : IGenericRepository<TEntity>
-        where TEntity : class
-        where TContext : DbContext
+    public class EfGenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+
     {
-        private readonly TContext _context;
+        private readonly DbContext _context;
         private readonly DbSet<TEntity> _set;
 
-        public EfGenericRepository(TContext context)
+        public EfGenericRepository(IDbContextProvider provider)
         {
-            _context = context;
-            _set = context.Set<TEntity>();
+            _context = provider.Context;
+            _set = _context.Set<TEntity>();
         }
 
         public bool HasData() => _set.Any();

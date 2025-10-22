@@ -9,13 +9,13 @@ using System.Data;
 
 namespace BuildingBlock.Infrastracture.Repositories
 {
-    public sealed class EfUnitOfWork<TContext> : IUnitOfWork
-        where TContext : DbContext
+    public class EfUnitOfWork : IUnitOfWork
+
     {
-        private readonly TContext _context;
+        private readonly DbContext _context;
         private readonly ConcurrentDictionary<Type, object> _repos = new();
 
-        public EfUnitOfWork(TContext context) => _context = context;
+        public EfUnitOfWork(IDbContextProvider provider) => _context = provider.Context;
 
         // ------------ Repositories ------------
         public IGenericRepository<TEntity> Repository<TEntity>() where TEntity : class
@@ -24,10 +24,9 @@ namespace BuildingBlock.Infrastracture.Repositories
             if (_repos.TryGetValue(type, out var repo))
                 return (IGenericRepository<TEntity>)repo;
 
-            // أنشئ EfGenericRepository<TEntity, TContext> مغلق النوع
-            var closedRepoType = typeof(EfGenericRepository<,>).MakeGenericType(typeof(TEntity), typeof(TContext));
+            var closedRepoType = typeof(EfGenericRepository<>).MakeGenericType(typeof(TEntity));
             var instance = (IGenericRepository<TEntity>)ActivatorUtilities.CreateInstance(
-                _context.GetService<IServiceProvider>() ?? throw new InvalidOperationException("No root ServiceProvider"),
+                _context.GetService<IServiceProvider>(),
                 closedRepoType,
                 _context
             );

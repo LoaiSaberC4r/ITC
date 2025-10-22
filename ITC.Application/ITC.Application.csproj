@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="12.0.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BuildingBlock.Application\BuildingBlock.Application.csproj" />
     <ProjectReference Include="..\ITC.Domain\ITC.Domain.csproj" />
   </ItemGroup>

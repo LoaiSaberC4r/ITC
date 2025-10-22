@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
+/// <summary>
+/// For Minimum APIs Only Not for MVC Controllers
+/// </summary>
 namespace BuildingBlock.Api
 {
     public static class ProblemDetailsMapping
