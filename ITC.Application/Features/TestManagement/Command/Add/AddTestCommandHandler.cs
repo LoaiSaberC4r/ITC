@@ -11,7 +11,7 @@ namespace ITC.Application.Features.TestManagement.Command.Add
 
         public AddTestCommandHandler(IGenericRepository<TestEntity> testRepository)
         {
-            _testRepository = testRepository;
+            _testRepository = testRepository ?? throw new ArgumentNullException(nameof(testRepository));
         }
 
         public async Task<Result> Handle(AddTestCommand request, CancellationToken cancellationToken)

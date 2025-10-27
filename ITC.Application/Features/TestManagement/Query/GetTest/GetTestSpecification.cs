@@ -8,7 +8,7 @@ namespace ITC.Application.Features.TestManagement.Query.GetTest
         public GetTestSpecification()
         {
             AddOrderByDescending(x => x.CreatedOnUtc);
-            //Select(x => new GetTestResponse { Name = x.Name });
+            Select(x => new GetTestResponse { Name = x.Name });
         }
     }
 }
